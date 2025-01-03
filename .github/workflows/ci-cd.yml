@@ -31,10 +31,17 @@ jobs:
           pip install huggingface_hub
           huggingface-cli login --token ${{ secrets.HGFACESECRET }}
 
-      - name: Create Hugging Face Space
+      - name: Clone Hugging Face Space Repository
         run: |
-          huggingface-cli repo create Summarizer --type space || true
+          git clone https://huggingface.co/spaces/NaeemKhilji/Summarizer
+          cp -r . Summarizer/
+          cd Summarizer
 
-      - name: Upload to Hugging Face Space
+      - name: Push Changes to Hugging Face Space
         run: |
-          huggingface-cli repo upload . --repo-id NaeemKhilji/Summarizer
+          cd Summarizer
+          git config --global user.email "your-email@example.com"
+          git config --global user.name "NaeemKhilji"
+          git add .
+          git commit -m "CI/CD update"
+          git push
