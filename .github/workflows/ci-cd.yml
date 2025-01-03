@@ -32,10 +32,11 @@ jobs:
           huggingface-cli login --token ${{ secrets.HGFACESECRET }}
 
       - name: Clone Hugging Face Space Repository
+        run: git clone https://huggingface.co/spaces/NaeemKhilji/Summarizer
+
+      - name: Copy Files to Repository
         run: |
-          git clone https://huggingface.co/spaces/NaeemKhilji/Summarizer
-          cp -r . Summarizer/
-          cd Summarizer
+          rsync -av --exclude='.git' ./ Summarizer/
 
       - name: Push Changes to Hugging Face Space
         run: |
