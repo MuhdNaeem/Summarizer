@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # Explicitly specify the Ubuntu version to avoid warnings
 
     steps:
       - name: Checkout repository
