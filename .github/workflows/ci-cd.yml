@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-22.04  # Explicitly specify the Ubuntu version to avoid warnings
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
@@ -26,16 +26,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Debugging Info
-        run: |
-          echo "Python version:"
-          python --version
-          echo "Working directory contents:"
-          ls -la
-
-      - name: Deploy to Hugging Face Space
+      - name: Login to Hugging Face
         run: |
           pip install huggingface_hub
           huggingface-cli login --token ${{ secrets.HGFACESECRET }}
-          huggingface-cli repo create Summarizer --type space --sdk gradio || true
-          huggingface-cli upload-folder --folder . --path NaeemKhilji/Summarizer
+
+      - name: Create Hugging Face Space
+        run: |
+          huggingface-cli repo create Summarizer --type space || true
+
+      - name: Upload to Hugging Face Space
+        run: |
+          huggingface-cli repo upload . --repo-id NaeemKhilji/Summarizer
