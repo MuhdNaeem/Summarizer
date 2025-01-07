@@ -49,3 +49,9 @@ jobs:
           git add .
           git commit -m "CI/CD update"
           git push
+
+
+  #here I am going to do a commit to see the changes in the github and then follow the ci cd pipelin.e 
+
+
+
